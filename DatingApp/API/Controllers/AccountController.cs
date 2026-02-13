@@ -33,19 +33,14 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
         await context.SaveChangesAsync();
 
         return user.ToDto(tokenService);
-
-        // return new UserDto
-        // {
-        //     Id = user.Id,
-        //     Email = user.Email,
-        //     DisplayName = user.DisplayName,
-        //     Token = tokenService.CreateToken(user)
-        // };
     }
 
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
+        int i = 5, j;
+        Console.WriteLine(j = i * 2);
+
         var user = await context.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email);
         if(user == null)
             return Unauthorized("User email is invalid");
@@ -65,15 +60,9 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
 
         // password is good.
 
-        return user.ToDto(tokenService);
 
-        // return new UserDto
-        // {
-        //     Id = user.Id,
-        //     Email = user.Email,
-        //     DisplayName = user.DisplayName,
-        //     Token = tokenService.CreateToken(user)
-        // };
+
+        return user.ToDto(tokenService);
     }
 
     private async Task<bool> EmailExists(string email) 
