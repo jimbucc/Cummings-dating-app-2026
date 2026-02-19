@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 // Add CORS
 builder.Services.AddCors();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -45,5 +46,21 @@ app.UseAuthentication();  // who are you
 app.UseAuthorization();   // are you allowed to do what you say you can do
 
 app.MapControllers();
+
+// Seed the database
+// Need access to the AppDbContext
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred during migration");
+}
 
 app.Run();
