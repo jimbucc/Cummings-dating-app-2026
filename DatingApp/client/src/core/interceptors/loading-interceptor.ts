@@ -26,3 +26,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
     })
   );
 };
+
+// cloud name: jarbyvid
+// SECRET: Axpmvquga99VG1SyMyxvThEeIdI
+// KEY: 611985489523541
