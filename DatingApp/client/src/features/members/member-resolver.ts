@@ -9,6 +9,8 @@ export const memberResolver: ResolveFn<Member> = (route, state) => {
   const router = inject(Router);
   const memberId = route.paramMap.get('id');
 
+  console.log('memberResolver: memberId is:', memberId)
+
   if(!memberId) {
     router.navigateByUrl('/not-found')
     return EMPTY;
