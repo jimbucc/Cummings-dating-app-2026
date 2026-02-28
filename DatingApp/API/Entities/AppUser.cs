@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities;
 
-public class AppUser
+public class AppUser : IdentityUser
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();   // use Guids as unique ids for users.  Used as primary key in db
     public required string DisplayName { get; set; }  // class cannot be created unless required fields are populated
-    public required string  Email { get; set; }
     public string? ImageUrl { get; set; }
-    public required byte[] PasswordHash { get; set; }
-    public required byte[] PasswordSalt { get; set; }
-
+    public string? RefreshToken { get; set; }
+    public DateTime?  RefreshTokenExpiry { get; set; }
+    
     // Nav property
     public Member Member {get;set;} = null!;
 }
