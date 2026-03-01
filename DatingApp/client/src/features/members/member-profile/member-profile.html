@@ -23,7 +23,7 @@
                     <span>Description</span>
                     <textarea 
                         class="input w-full"
-                        name="description" [(ngModel)]="editableMember.description"          placeholder="Display Name"></textarea>                       
+                        name="description" [(ngModel)]="editableMember.description"          placeholder="Description"></textarea>                       
                 </label>
                 <label class="floating-label">
                     <span>City</span>
@@ -44,7 +44,7 @@
 
             </form>
         } @else {
-            <div>{{member.description}}</div>
+            <div>{{member.description || 'No Description provided yet'}}</div>
         }
     </div>
 }

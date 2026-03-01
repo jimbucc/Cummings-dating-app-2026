@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, Ro
 import { filter } from 'rxjs';
 import { AgePipe } from '../../../core/pipes/age-pipe';
 import { AccountService } from '../../../core/services/account-service';
+import { PresenceService } from '../../../core/services/presence-service';
 
 @Component({
   selector: 'app-member-detailed',
@@ -14,6 +15,7 @@ import { AccountService } from '../../../core/services/account-service';
 export class MemberDetailed implements OnInit {
   protected memberService = inject(MemberService);
   private accountService = inject(AccountService);
+  protected presenceService = inject(PresenceService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   protected title = signal<string | undefined>('Profile');
