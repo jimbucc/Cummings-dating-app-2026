@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams, httpResource } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Member } from '../../types/member';
 import { PaginatedResult } from '../../types/pagination';
 
@@ -13,7 +13,17 @@ export class LikesService {
   likeIds = signal<string[]>([]);
 
   toggleLike(targetMemberId: string) {
-    return this.http.post(`${this.baseUrl}likes/${targetMemberId}`,{});
+    return this.http.post(`${this.baseUrl}likes/${targetMemberId}`, {}).subscribe({
+      next: () => {
+        if (this.likeIds().includes(targetMemberId)) {
+          // toggle like off for this member id
+          this.likeIds.update((ids) => ids.filter((x) => x !== targetMemberId));
+        } else {
+          // toggle like on for this member id
+          this.likeIds.update((ids) => [...ids, targetMemberId]);
+        }
+      },
+    });
   }
 
   getLikes(predicate: string, pageNumber: number, pageSize: number) {

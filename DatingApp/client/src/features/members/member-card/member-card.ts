@@ -20,17 +20,7 @@ export class MemberCard {
 
   toggleLike(event: Event) {
     event.stopPropagation();
-    this.likesService.toggleLike(this.member().id).subscribe({
-      next: () => {
-        if (this.hasLiked()) {
-          // toggle like off for this member id
-          this.likesService.likeIds.update((ids) => ids.filter((x) => x !== this.member().id));
-        } else {
-          // toggle like on for this member id
-          this.likesService.likeIds.update(ids => [...ids, this.member().id])
-        }
-      }
-    })
+    this.likesService.toggleLike(this.member().id)
   }
 
 }
